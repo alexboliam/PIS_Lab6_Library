@@ -1,6 +1,8 @@
 This is project with the topic "Students' library"
 Developing by Oleksandr Bolshoi
 
+Fell free to read more project's documentation in Wiki tab
+
 To launch server you should have:
 
  1. Visual Studio 2017 or 2019 edition
