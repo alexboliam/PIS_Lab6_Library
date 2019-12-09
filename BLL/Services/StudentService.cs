@@ -1,0 +1,79 @@
+﻿using AutoMapper;
+using DAL.Interfaces;
+using DAL.UnitsOfWork;
+using DAL.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using BLL.Dtos;
+
+namespace BLL.Services
+{
+    public class StudentService
+    {
+        private IMapper mapper;
+        private IUnitOfWork unit;
+        public StudentService(string connection)
+        {
+            unit = new UnitOfWork(connection);
+            mapper = Mappers.BLLMapperConfig.mapper;
+        }
+
+        public StudentDto GetStudentByName(string name)
+        {
+            return mapper.Map<StudentDto>( unit.Students.FindByCondition(x => x.FullName == name).FirstOrDefault() );
+        }
+        public IEnumerable<StudentDto> GetAllStudents()
+        {
+            return mapper.Map<IEnumerable<StudentDto>>( unit.Students.FindAll().ToList() );
+        }
+        public bool TakeBook(BookDto book, StudentDto student, DateTime issueDate) // student takes the book from library
+        {
+            if (book != null && book.IsAvailable == true) // if this book is available
+            {
+
+                if (student != null && student.LibraryCard.Fields.Where(x => x.Book.IsAvailable == false).Count() <= 10)
+                { // if student exists and his/her limit of non-returned books is not exceeded
+                    var libraryCard = student.LibraryCard; // take his/her library card
+
+                    unit.LibraryCardFields.Create( 
+                        mapper.Map<LibraryCardField>(
+                            new LibraryCardFieldDto()
+                            {
+                                Id = Guid.NewGuid(), // generate new id
+                                Book = book, // student got this book
+                                LibraryCard = libraryCard, // field is in this library card
+                                IssueDate = issueDate, // note current date
+                                ReturnDate = null // student still didn't return it
+                            }));
+
+                    unit.Save(); // save changes
+                    return true;
+                }
+                else { return false; }    
+            }
+            else { return false; }    
+        }
+        public bool ReturnBook(BookDto book, StudentDto student, DateTime returnDate)
+        {
+            if(book!=null)
+            {
+                if (student != null && student.LibraryCard.Fields.FirstOrDefault(x=>x.Book == book)!=null)
+                {
+                    book.IsAvailable = true;
+                    unit.Books.Update(mapper.Map<Book>(book));
+
+                    var field = student.LibraryCard.Fields.FirstOrDefault(x => x.Book == book);
+                    field.ReturnDate = returnDate;
+                    unit.LibraryCardFields.Update(mapper.Map<LibraryCardField>(field));
+
+                    unit.Save();
+                    return true;
+                }
+                else { return false; }
+            }
+            else { return false; }
+        }
+
+    }
+}
