@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191209180233_checkmigration.cs" />
+    <Compile Remove="Migrations\20191209180233_checkmigration.Designer.cs" />
+    <Compile Remove="Migrations\20191209180342_checkmigration.cs" />
+    <Compile Remove="Migrations\20191209180342_checkmigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />

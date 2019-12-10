@@ -1,8 +1,7 @@
 ﻿using DAL.Interfaces;
 using DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DAL.UnitsOfWork
 {

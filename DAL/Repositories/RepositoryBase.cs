@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace DAL.Repositories
         {
             return this.LibraryContext.Set<T>();
         }
+
         public IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
             return this.LibraryContext.Set<T>().Where(expression);
