@@ -36,6 +36,7 @@ namespace PL
 
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
         .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

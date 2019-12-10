@@ -32,6 +32,8 @@ namespace PL.Extentions
         {
             services.AddScoped<IStudentsService, StudentsService>();
             services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<ILibraryCardsService, LibraryCardsService>();
+
         }
 
 

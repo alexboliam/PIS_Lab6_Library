@@ -24,6 +24,10 @@ namespace BLL.Services
         {
             return mapper.Map<StudentDto>( unit.Students.FindByCondition(x => x.FullName == name).FirstOrDefault() );
         }
+        public StudentDto GetStudentById(Guid id)
+        {
+            return mapper.Map<StudentDto>(unit.Students.FindByCondition(x => x.StudentId == id).FirstOrDefault());
+        }
         public IEnumerable<StudentDto> GetAllStudents()
         {
             return mapper.Map<IEnumerable<StudentDto>>( unit.Students.FindAll().OrderBy(x=>x.FullName).ToList() );

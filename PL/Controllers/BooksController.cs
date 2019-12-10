@@ -33,14 +33,56 @@ namespace PL.Controllers
             }
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("findbyname/{name}")]
         public IActionResult GetBooksByName(string name)
         {
             try
             {
                 var books = booksService.GetBooksByName(name);
 
-                if (books==null)
+                if (books== null || books.Count() < 1)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(books);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("findbyauthor/{author}")]
+        public IActionResult GetBooksByAuthorName(string author)
+        {
+            try
+            {
+                var books = booksService.GetBooksByAuthorName(author);
+
+                if (books == null || books.Count() < 1)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(books);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("findbycategory/{category}")]
+        public IActionResult GetBooksByCategoryName(string category)
+        {
+            try
+            {
+                var books = booksService.GetBooksByCategoryName(category);
+
+                if (books == null || books.Count() < 1)
                 {
                     return NotFound();
                 }

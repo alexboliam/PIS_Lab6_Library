@@ -11,5 +11,6 @@ namespace BLL.Interfaces
         IEnumerable<StudentDto> GetAllStudents();
         bool TakeBook(BookDto book, StudentDto student, DateTime issueDate);
         bool ReturnBook(BookDto book, StudentDto student, DateTime returnDate);
+        StudentDto GetStudentById(Guid id);
     }
 }
