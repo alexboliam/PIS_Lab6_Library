@@ -2,6 +2,7 @@ This is project with the topic "Students' library"
 Developing by Oleksandr Bolshoi
 
 Fell free to read more project's documentation in Wiki tab
+
 Link to github repository with this documentation: https://github.com/alexboliam/PIS_Lab6_Library
 
 To launch server you should have:
