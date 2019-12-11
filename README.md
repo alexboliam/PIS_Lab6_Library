@@ -15,3 +15,5 @@ How to launch the server on localhost:
  1. Clone the project to a local computer.
  2. Open .sln file via Visual Studio.
  3. Press F5, or launch ("IIS Express") button.
+
+Detailed launch instruction you can find in documentation.
