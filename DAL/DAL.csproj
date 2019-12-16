@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -12,6 +12,8 @@
     <Compile Remove="Migrations\20191209180233_checkmigration.Designer.cs" />
     <Compile Remove="Migrations\20191209180342_checkmigration.cs" />
     <Compile Remove="Migrations\20191209180342_checkmigration.Designer.cs" />
+    <Compile Remove="Migrations\20191215205428_check.cs" />
+    <Compile Remove="Migrations\20191215205428_check.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

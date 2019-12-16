@@ -12,19 +12,20 @@ namespace PL.Mappers
     {
         public PLMappingProfile()
         {
-            CreateMap<AuthorPL, AuthorDto>();
-            CreateMap<BookPL, BookDto>();
-            CreateMap<CategoryPL, CategoryDto>();
-            CreateMap<LibraryCardPL, LibraryCardDto>();
-            CreateMap<LibraryCardFieldPL, LibraryCardFieldDto>();
-            CreateMap<StudentPL, StudentDto>();
-
             CreateMap<AuthorPL, AuthorDto>().ReverseMap();
-            CreateMap<BookPL, BookDto>().ReverseMap();
+            CreateMap<BookPL, BookDto>();
+                //.AfterMap((s, d) => d.Author = new AuthorDto())
+                //.AfterMap((s, d) => d.Author.AuthorId = s.AuthorId)
+                //.AfterMap((s, d) => d.Category = new CategoryDto())
+                //.AfterMap((s, d) => d.Category.CategoryId = s.CategoryId);
+            CreateMap<BookDto, BookPL>();
+                //.AfterMap((s, d) => d.AuthorId = s.Author.AuthorId)
+                //.AfterMap((s, d) => d.CategoryId = s.Category.CategoryId);
             CreateMap<CategoryPL, CategoryDto>().ReverseMap();
             CreateMap<LibraryCardPL, LibraryCardDto>().ReverseMap();
             CreateMap<LibraryCardFieldPL, LibraryCardFieldDto>().ReverseMap();
             CreateMap<StudentPL, StudentDto>().ReverseMap();
+
 
         }
     }

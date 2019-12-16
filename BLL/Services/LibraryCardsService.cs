@@ -23,5 +23,10 @@ namespace BLL.Services
         {
             return mapper.Map<IEnumerable<LibraryCardDto>>(unit.Students.FindAll().ToList());
         }
+
+        public LibraryCardDto GetLibraryCardByStudent(StudentDto student)
+        {
+            return mapper.Map<LibraryCardDto>(unit.Students.FindByCondition(x=>x.StudentId == student.StudentId).FirstOrDefault());
+        }
     }
 }

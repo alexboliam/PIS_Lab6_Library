@@ -50,5 +50,6 @@ namespace PL.Controllers
                 return StatusCode(500, "Internal server error. Cannot get list of students.");
             }
         }
+
     }
 }

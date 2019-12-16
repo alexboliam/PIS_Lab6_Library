@@ -9,7 +9,6 @@ namespace PL.Models
     public class CategoryPL
     {
         public Guid CategoryId { get; set; }
-        public Guid? ParentCategoryId { get; set; }
         public virtual CategoryPL ParentCategory { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Max length for category name is 50")]

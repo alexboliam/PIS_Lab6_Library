@@ -7,6 +7,5 @@ namespace BLL.Dtos
     {
         public Guid AuthorId { get; set; }
         public string FullName { get; set; }
-        public virtual IEnumerable<BookDto> Books { get; set; }
     }
 }

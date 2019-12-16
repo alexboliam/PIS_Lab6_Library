@@ -9,6 +9,5 @@ namespace PL.Models
     {
         public Guid AuthorId { get; set; }
         public string FullName { get; set; }
-        public virtual IEnumerable<BookPL> Books { get; set; }
     }
 }

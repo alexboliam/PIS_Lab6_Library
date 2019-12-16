@@ -10,19 +10,14 @@ namespace DAL.Models
         public Guid BookId { get; set; } 
         public bool IsAvailable { get; set; }
         public virtual Category Category { get; set; }
-
-        [ForeignKey(nameof(Author))]
-        public Guid AuthorId { get; set; }
         public virtual Author Author { get; set; }
 
         [Required]
-        [MaxLength(50, ErrorMessage = "Name length must be less then 50 characters")]
+        [MaxLength(150, ErrorMessage = "Name length must be less then 150 characters")]
         public string Name { get; set; }
         [Required]
-        [MaxLength(250, ErrorMessage = "Description length must be less then 250 characters")]
-        public string Description { get; set; }
-
-        
+        [MaxLength(2500, ErrorMessage = "Description length must be less then 2500 characters")]
+        public string Description { get; set; }   
         
     }
 }
