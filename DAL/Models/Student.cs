@@ -8,6 +8,9 @@ namespace DAL.Models
     public class Student
     {
         public Guid StudentId { get; set; }
+        [Required]
+        [MaxLength(50, ErrorMessage = "Length must be less then 50 characters")]
+        public string Login { get; set; }
 
         [Required]
         [MaxLength(50, ErrorMessage = "Length must be less then 50 characters")]

@@ -32,53 +32,62 @@ namespace BLL.Services
         {
             return mapper.Map<IEnumerable<StudentDto>>( unit.Students.FindAll().OrderBy(x=>x.FullName).ToList() );
         }
-        public bool TakeBook(BookDto book, StudentDto student, DateTime issueDate) // student takes the book from library
+
+        public bool AddStudent(StudentDto student)
         {
-            if (book != null && book.IsAvailable == true) // if this book is available
+            var newStudent = mapper.Map<DAL.Models.Student>(student);
+
+            var check = unit.Students.FindByCondition(x => x.Login == student.Login).Count();
+
+            if(check != 0)
             {
-
-                if (student != null && student.LibraryCard.Fields.Where(x => x.Book.IsAvailable == false).Count() <= 10)
-                { // if student exists and his/her limit of non-returned books is not exceeded
-                    var libraryCard = student.LibraryCard; // take his/her library card
-
-                    unit.LibraryCardFields.Create( 
-                        mapper.Map<LibraryCardField>(
-                            new LibraryCardFieldDto()
-                            {
-                                Id = Guid.NewGuid(), // generate new id
-                                Book = book, // student got this book
-                                LibraryCard = libraryCard, // field is in this library card
-                                IssueDate = issueDate, // note current date
-                                ReturnDate = null // student still didn't return it
-                            }));
-
-                    unit.Save(); // save changes
-                    return true;
-                }
-                else { return false; }    
+                return false;
             }
-            else { return false; }    
+            else
+            {
+                unit.Students.Create(newStudent);
+                unit.Save();
+                return true;
+            }
         }
-        public bool ReturnBook(BookDto book, StudentDto student, DateTime returnDate)
+        public void UpdateStudent(StudentDto student)
         {
-            if(book!=null)
-            {
-                if (student != null && student.LibraryCard.Fields.FirstOrDefault(x=>x.Book == book)!=null)
-                {
-                    book.IsAvailable = true;
-                    unit.Books.Update(mapper.Map<Book>(book));
+            var newStudent = mapper.Map<DAL.Models.Student>(student);
 
-                    var field = student.LibraryCard.Fields.FirstOrDefault(x => x.Book == book);
-                    field.ReturnDate = returnDate;
-                    unit.LibraryCardFields.Update(mapper.Map<LibraryCardField>(field));
+            newStudent.LibraryCard = LoadCard(student);
 
-                    unit.Save();
-                    return true;
-                }
-                else { return false; }
-            }
-            else { return false; }
+            unit.Students.Update(newStudent);
+            unit.Save();
         }
+        public void DeleteStudent(StudentDto student)
+        {
+            var deleteStudent = mapper.Map<DAL.Models.Student>(student);
+
+            deleteStudent.LibraryCard = LoadCard(student);
+
+            unit.Students.Delete(deleteStudent);
+            unit.Save();
+        }
+
+        public Guid? Authorize(string login)
+        {
+            var student = unit.Students.FindByCondition(x => x.Login == login).FirstOrDefault();
+            if(student==null)
+            {
+                return null;
+            }
+            else
+            {
+                return (Guid?)student.StudentId;
+            }
+        }
+
+        #region Private methods
+        private DAL.Models.LibraryCard LoadCard(StudentDto student)
+        {
+            return unit.LibraryCards.FindByCondition(x => x.StudentId.Equals(student.StudentId)).FirstOrDefault();
+        } 
+        #endregion
 
     }
 }

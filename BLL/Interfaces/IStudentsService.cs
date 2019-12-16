@@ -9,8 +9,12 @@ namespace BLL.Interfaces
     {
         StudentDto GetStudentByName(string name);
         IEnumerable<StudentDto> GetAllStudents();
-        bool TakeBook(BookDto book, StudentDto student, DateTime issueDate);
-        bool ReturnBook(BookDto book, StudentDto student, DateTime returnDate);
         StudentDto GetStudentById(Guid id);
+
+        bool AddStudent(StudentDto student);
+        void UpdateStudent(StudentDto student);
+        void DeleteStudent(StudentDto student);
+
+        Guid? Authorize(string login);
     }
 }

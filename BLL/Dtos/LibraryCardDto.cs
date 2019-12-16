@@ -8,6 +8,5 @@ namespace BLL.Dtos
         public Guid LibraryCardId { get; set; }
         public Guid StudentId { get; set; }
         public virtual StudentDto Student { get; set; }
-        public virtual ICollection<LibraryCardFieldDto> Fields { get; set; }
     }
 }

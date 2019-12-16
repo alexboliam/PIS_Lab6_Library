@@ -11,7 +11,7 @@ using PL.Models;
 
 namespace PL.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authors")]
     [ApiController]
     public class AuthorsController : ControllerBase
     {

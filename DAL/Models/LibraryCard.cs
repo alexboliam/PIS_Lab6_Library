@@ -9,6 +9,5 @@ namespace DAL.Models
         public Guid LibraryCardId { get; set; }
         public Guid StudentId { get; set; }
         public virtual Student Student { get; set; }
-        public virtual ICollection<LibraryCardField> Fields { get; set; }
     }
 }

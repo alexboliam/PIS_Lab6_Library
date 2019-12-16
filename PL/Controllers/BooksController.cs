@@ -29,17 +29,16 @@ namespace PL.Controllers
             try
             {
                 var books = booksService.GetAllBooks();
-                List<BookDto> newbooks = new List<BookDto>();
-                if (this.CheckQuery(author))
+
+                if (!string.IsNullOrEmpty(author))
                 {
                     books = books.Intersect(books.Where(x => x.Author.FullName == author)).ToList();
                 }
-                if (this.CheckQuery(category))
+                if (!string.IsNullOrEmpty(category))
                 {
-                    var catBooks = booksService.GetBooksByCategoryName(category);
                     books = books.Intersect(books.Where(x => x.Category.CategoryName == category)).ToList();
                 }
-                if (this.CheckQuery(name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     books = books.Intersect(books.Where(x=>x.Name==name)).ToList();
                 }
@@ -57,7 +56,7 @@ namespace PL.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error. Cannot get list of books.");
+                return StatusCode(500, "Internal server error. Cannot get list of books. Error message: " + ex);
             }
         }
 
@@ -148,9 +147,5 @@ namespace PL.Controllers
             }
         }
 
-        private bool CheckQuery(string value)
-        {
-            return (value != null && value != string.Empty ) ? true : false;
-        }
     }
 }
