@@ -15,11 +15,13 @@ namespace PL.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
+        ILibraryCardsService libraryCardsService;
         private IBooksService booksService;
         private IMapper mapper;
-        public BooksController(IBooksService booksService, IMapper mapper)
+        public BooksController(IBooksService booksService, ILibraryCardsService libraryCardsService, IMapper mapper)
         {
             this.booksService = booksService;
+            this.libraryCardsService = libraryCardsService;
             this.mapper = mapper;
         }
 
@@ -147,5 +149,48 @@ namespace PL.Controllers
             }
         }
 
+        [HttpPut("take")]
+        public IActionResult TakeBook([FromQuery]Guid bookId, [FromQuery]Guid studentId, DateTime issueDate)
+        {
+            try
+            {
+                var taken = libraryCardsService.TakeBook(bookId, studentId, issueDate);
+
+                if(taken)
+                {
+                    return StatusCode(204, "Book was taken.");
+                }
+                else
+                {
+                    return StatusCode(500, "Book was not taken.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error. Book is not taken. Exception message: " + ex);
+            }
+        }
+
+        [HttpPut("return")]
+        public IActionResult ReturnBook([FromQuery]Guid bookId, [FromQuery]Guid studentId, DateTime returnDate)
+        {
+            try
+            {
+                var taken = libraryCardsService.ReturnBook(bookId, studentId, returnDate);
+
+                if (taken)
+                {
+                    return StatusCode(204, "Book was returned.");
+                }
+                else
+                {
+                    return StatusCode(500, "Book was not returned.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error. Book is not returned. Exception message: " + ex);
+            }
+        }
     }
 }

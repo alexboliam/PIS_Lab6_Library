@@ -83,6 +83,8 @@ namespace BLL.Services
                                 ReturnDate = null // student still didn't return it
                             });
 
+                    book.IsAvailable = false;
+
                     unit.Save(); // save changes
                     return true;
                 }
@@ -101,12 +103,13 @@ namespace BLL.Services
 
                 if (student != null && fields.FirstOrDefault(x => x.Book == book) != null)
                 {
-                    book.IsAvailable = true;
-                    unit.Books.Update(book);
+                   
 
                     var field = fields.FirstOrDefault(x => x.Book == book);
                     field.ReturnDate = returnDate;
                     unit.LibraryCardFields.Update(field);
+
+                    book.IsAvailable = true;
 
                     unit.Save();
                     return true;
