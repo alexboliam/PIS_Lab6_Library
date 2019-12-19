@@ -11,7 +11,7 @@ namespace BLL.Interfaces
         IEnumerable<StudentDto> GetAllStudents();
         StudentDto GetStudentById(Guid id);
 
-        bool AddStudent(StudentDto student);
+        Guid? AddStudent(StudentDto student);
         void UpdateStudent(StudentDto student);
         void DeleteStudent(StudentDto student);
 

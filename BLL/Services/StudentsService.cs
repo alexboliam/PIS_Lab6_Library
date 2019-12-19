@@ -33,21 +33,26 @@ namespace BLL.Services
             return mapper.Map<IEnumerable<StudentDto>>( unit.Students.FindAll().OrderBy(x=>x.FullName).ToList() );
         }
 
-        public bool AddStudent(StudentDto student)
+        public Guid? AddStudent(StudentDto student)
         {
-            var newStudent = mapper.Map<DAL.Models.Student>(student);
+            var newStudent = mapper.Map<Student>(student);
 
             var check = unit.Students.FindByCondition(x => x.Login == student.Login).Count();
-
+            
             if(check != 0)
             {
-                return false;
+                return null;
             }
             else
             {
+                LibraryCard libraryCard = new LibraryCard();
+                libraryCard.LibraryCardId = Guid.NewGuid();
+                libraryCard.StudentId = newStudent.StudentId;
+                newStudent.LibraryCard = libraryCard;
+
                 unit.Students.Create(newStudent);
                 unit.Save();
-                return true;
+                return newStudent.StudentId;
             }
         }
         public void UpdateStudent(StudentDto student)

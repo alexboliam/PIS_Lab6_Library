@@ -9,6 +9,7 @@ namespace PL.Models
     public class LibraryCardFieldPL
     {
         public Guid Id { get; set; }
+        [Required]
         public DateTime? IssueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
 

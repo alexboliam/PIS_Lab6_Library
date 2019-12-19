@@ -24,6 +24,7 @@ namespace PL
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork(Configuration);
             services.ConfigureBLLServices();
+            services.ConfigureSwagger();
 
             services.ConfigureCors();
             services.ConfigureIISIntegration();
@@ -45,6 +46,13 @@ namespace PL
 
 
             app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Students' library API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
 
             app.UseCors("CorsPolicy");
 

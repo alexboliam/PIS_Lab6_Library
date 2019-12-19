@@ -9,6 +9,7 @@ namespace PL.Models
     public class BookPL
     {
         public Guid BookId { get; set; }
+        [Required]
         public bool IsAvailable { get; set; }
         public virtual CategoryPL Category { get; set; }
         public virtual AuthorPL Author { get; set; }
