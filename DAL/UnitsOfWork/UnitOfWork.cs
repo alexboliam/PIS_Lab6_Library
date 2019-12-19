@@ -15,9 +15,9 @@ namespace DAL.UnitsOfWork
         private ILibraryCardFieldRepository libraryCardFields;
         private IStudentRepository students;
 
-        public UnitOfWork(string connection)
+        public UnitOfWork(/*string connection*/LibraryContext context)
         {
-            this.libraryContext = new LibraryContext(connection);
+            this.libraryContext = context;
         }
         public void Save()
         {

@@ -19,10 +19,10 @@ namespace PL.Extentions
         public static void ConfigureUnitOfWork(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config["libraryConnection:DefaultConnection"];
-            services.AddScoped<IUnitOfWork, UnitOfWork>(ServiceProvider =>
+            services.AddScoped<IUnitOfWork, UnitOfWork>(/*ServiceProvider =>
             {
                 return new UnitOfWork(connectionString);
-            });
+            }*/);
 
         }
 

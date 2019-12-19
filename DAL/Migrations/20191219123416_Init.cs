@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,15 +24,15 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     CategoryId = table.Column<Guid>(nullable: false),
-                    ParentCategoryId = table.Column<Guid>(nullable: true),
+                    ParentCategoryCategoryId = table.Column<Guid>(nullable: true),
                     CategoryName = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
                     table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentCategoryId",
-                        column: x => x.ParentCategoryId,
+                        name: "FK_Categories_Categories_ParentCategoryCategoryId",
+                        column: x => x.ParentCategoryCategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Restrict);
@@ -43,6 +43,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     StudentId = table.Column<Guid>(nullable: false),
+                    Login = table.Column<string>(maxLength: 50, nullable: false),
                     FullName = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -57,9 +58,9 @@ namespace DAL.Migrations
                     BookId = table.Column<Guid>(nullable: false),
                     IsAvailable = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<Guid>(nullable: true),
-                    AuthorId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 250, nullable: false)
+                    AuthorId = table.Column<Guid>(nullable: true),
+                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    Description = table.Column<string>(maxLength: 2500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +70,7 @@ namespace DAL.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "AuthorId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -134,9 +135,9 @@ namespace DAL.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentCategoryId",
+                name: "IX_Categories_ParentCategoryCategoryId",
                 table: "Categories",
-                column: "ParentCategoryId");
+                column: "ParentCategoryCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LibraryCardFields_BookId",

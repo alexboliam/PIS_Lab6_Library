@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20191215220153_check2")]
-    partial class check2
+    [Migration("20191219123416_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,6 +145,11 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
                     b.HasKey("StudentId");
 
                     b.ToTable("Students");
@@ -186,7 +191,7 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("DAL.Models.LibraryCard", "LibraryCard")
-                        .WithMany("Fields")
+                        .WithMany()
                         .HasForeignKey("LibraryCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

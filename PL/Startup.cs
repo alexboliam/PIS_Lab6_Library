@@ -1,7 +1,9 @@
+using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +30,11 @@ namespace PL
 
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<LibraryContext>(options =>
+                     options.UseSqlServer(connection).UseLazyLoadingProxies().EnableSensitiveDataLogging());
+            
 
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
